@@ -1,6 +1,138 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=28 format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_tww58"]
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_8stom"]
+[ext_resource type="Shader" path="res://assets/shaders/glow.gdshader" id="2_5bsyt"]
+[ext_resource type="Texture2D" path="res://assets/icons/coin.svg" id="3_6x5ux"]
+[ext_resource type="Texture2D" path="res://assets/icons/info.svg" id="4_op76c"]
+[ext_resource type="Texture2D" path="res://assets/icons/user.svg" id="5_r3uj5"]
+[ext_resource type="Texture2D" path="res://assets/icons/bolt.svg" id="6_ckdm5"]
+[ext_resource type="Texture2D" path="res://assets/icons/star.svg" id="7_kw0rr"]
+[ext_resource type="Texture2D" path="res://assets/icons/eye.svg" id="8_wrucu"]
+[ext_resource type="Texture2D" path="res://assets/icons/sparkle.svg" id="9_7qqjc"]
+[ext_resource type="Texture2D" path="res://assets/icons/film.svg" id="10_fb1ii"]
+[ext_resource type="Texture2D" path="res://assets/icons/up.svg" id="11_ryc6l"]
+[ext_resource type="Texture2D" path="res://assets/icons/sound_on.svg" id="12_5btt6"]
+[ext_resource type="Texture2D" path="res://assets/icons/heart.svg" id="13_ndujm"]
+[ext_resource type="Texture2D" path="res://assets/icons/thumb.svg" id="14_tuoc0"]
+[ext_resource type="Shader" path="res://assets/shaders/flash.gdshader" id="15_8p7uy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_igwhs"]
+shader = ExtResource("2_5bsyt")
+shader_parameter/glow_color = Color(1, 0.819608, 0.4, 1)
+shader_parameter/intensity = null
+shader_parameter/pulse_speed = null
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_po0y3"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.654902, 0.545098, 0.980392, 0.25)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.654902, 0.545098, 0.980392, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grkpt"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.654902, 0.545098, 0.980392, 0.5)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.819608, 0.4, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_csjrg"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.654902, 0.545098, 0.980392, 0.35)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.654902, 0.545098, 0.980392, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_av8mq"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 0.819608, 0.4, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp3e5"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 0.419608, 0.603922, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkh0e"]
+content_margin_left = 22.0
+content_margin_top = 11.0
+content_margin_right = 22.0
+content_margin_bottom = 11.0
+bg_color = Color(0.654902, 0.545098, 0.980392, 1)
+border_width_bottom = 8
+border_color = Color(0.356863, 0.247059, 0.54902, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8vxb"]
+content_margin_left = 22.0
+content_margin_top = 11.0
+content_margin_right = 22.0
+content_margin_bottom = 11.0
+bg_color = Color(0.689412, 0.590588, 0.982353, 1)
+border_width_bottom = 8
+border_color = Color(0.356863, 0.247059, 0.54902, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="Gradient" id="Gradient_odwsm"]
+offsets = PackedFloat32Array(0, 1, 0.7)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_vs1rf"]
+offsets = PackedFloat32Array(0, 1, 0.7)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_qe3hh"]
+offsets = PackedFloat32Array(0, 1, 0.7)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nu8qi"]
+shader = ExtResource("15_8p7uy")
+shader_parameter/amount = null
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -8,151 +140,369 @@ anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource("1_tww58")
+script = ExtResource("1_8stom")
 
-[node name="TopBar" type="PanelContainer" parent="."]
+[node name="Safe" type="MarginContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 anchor_right = 1.0
-offset_left = 20.0
-offset_top = 40.0
-offset_right = -20.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 56
 
-[node name="Rows" type="VBoxContainer" parent="TopBar"]
+[node name="Layout" type="VBoxContainer" parent="Safe"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TopPanel" type="PanelContainer" parent="Safe/Layout"]
 layout_mode = 2
 
-[node name="Row1" type="HBoxContainer" parent="TopBar/Rows"]
+[node name="Rows" type="VBoxContainer" parent="Safe/Layout/TopPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CoinsRow" type="HBoxContainer" parent="Safe/Layout/TopPanel/Rows"]
 layout_mode = 2
 
-[node name="CoinsLabel" type="Label" parent="TopBar/Rows/Row1"]
+[node name="CoinBox" type="Control" parent="Safe/Layout/TopPanel/Rows/CoinsRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Glow" type="ColorRect" parent="Safe/Layout/TopPanel/Rows/CoinsRow/CoinBox"]
+material = SubResource("ShaderMaterial_igwhs")
+layout_mode = 0
+offset_left = -38.0
+offset_top = -38.0
+offset_right = 102.0
+offset_bottom = 102.0
+mouse_filter = 2
+
+[node name="CoinIcon" type="TextureRect" parent="Safe/Layout/TopPanel/Rows/CoinsRow/CoinBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("3_6x5ux")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinsLabel" type="Label" parent="Safe/Layout/TopPanel/Rows/CoinsRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 36
-text = "Монеты: 0"
+theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(1, 0.819608, 0.4, 1)
+text = "0"
+vertical_alignment = 1
 
-[node name="IncomeLabel" type="Label" parent="TopBar/Rows/Row1"]
+[node name="IncomeButton" type="Button" parent="Safe/Layout/TopPanel/Rows/CoinsRow"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "+0/с"
-horizontal_alignment = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_po0y3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_grkpt")
+theme_override_styles/hover = SubResource("StyleBoxFlat_csjrg")
+theme_override_font_sizes/font_size = 26
+theme_override_constants/icon_max_width = 34
+text = "+0.20/с"
+icon = ExtResource("4_op76c")
 
-[node name="Row2" type="HBoxContainer" parent="TopBar/Rows"]
+[node name="StatsRow" type="HBoxContainer" parent="Safe/Layout/TopPanel/Rows"]
 layout_mode = 2
 
-[node name="SubsLabel" type="Label" parent="TopBar/Rows/Row2"]
-unique_name_in_owner = true
+[node name="Subs" type="HBoxContainer" parent="Safe/Layout/TopPanel/Rows/StatsRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Подписчики: 0"
+theme_override_constants/separation = 8
 
-[node name="LevelLabel" type="Label" parent="TopBar/Rows/Row2"]
+[node name="SubsIcon" type="TextureRect" parent="Safe/Layout/TopPanel/Rows/StatsRow/Subs"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_r3uj5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SubsLabel" type="Label" parent="Safe/Layout/TopPanel/Rows/StatsRow/Subs"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Уровень 1"
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.309804, 0.819608, 0.647059, 1)
+text = "0"
+vertical_alignment = 1
+
+[node name="Energy" type="HBoxContainer" parent="Safe/Layout/TopPanel/Rows/StatsRow"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="EnergyIcon" type="TextureRect" parent="Safe/Layout/TopPanel/Rows/StatsRow/Energy"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_ckdm5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EnergyLabel" type="Label" parent="Safe/Layout/TopPanel/Rows/StatsRow/Energy"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 0.819608, 0.4, 1)
+text = "20/20"
+vertical_alignment = 1
+
+[node name="EnergyTimerLabel" type="Label" parent="Safe/Layout/TopPanel/Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
 horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="XpBar" type="ProgressBar" parent="TopBar/Rows"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 14)
+[node name="LevelRow" type="HBoxContainer" parent="Safe/Layout/TopPanel/Rows"]
 layout_mode = 2
+
+[node name="Level" type="HBoxContainer" parent="Safe/Layout/TopPanel/Rows/LevelRow"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LevelIcon" type="TextureRect" parent="Safe/Layout/TopPanel/Rows/LevelRow/Level"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_kw0rr")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LevelLabel" type="Label" parent="Safe/Layout/TopPanel/Rows/LevelRow/Level"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Ур. 1"
+vertical_alignment = 1
+
+[node name="XpBar" type="ProgressBar" parent="Safe/Layout/TopPanel/Rows/LevelRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_av8mq")
 show_percentage = false
 
-[node name="Row3" type="HBoxContainer" parent="TopBar/Rows"]
-layout_mode = 2
+[node name="XpLabel" type="Label" parent="Safe/Layout/TopPanel/Rows/LevelRow/XpBar"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_font_sizes/font_size = 22
+text = "до уровня 2: 0/100 XP"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="EnergyLabel" type="Label" parent="TopBar/Rows/Row3"]
+[node name="IncomeInfo" type="PanelContainer" parent="Safe/Layout"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Энергия: 20/20"
 
-[node name="EnergyTimerLabel" type="Label" parent="TopBar/Rows/Row3"]
+[node name="IncomeInfoLabel" type="Label" parent="Safe/Layout/IncomeInfo"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="Safe/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="ShootPanel" type="PanelContainer" parent="Safe/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ShootRows" type="VBoxContainer" parent="Safe/Layout/ShootPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ShootTopicLabel" type="Label" parent="Safe/Layout/ShootPanel/ShootRows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Снимаем"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LiveViews" type="HBoxContainer" parent="Safe/Layout/ShootPanel/ShootRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="LiveViewsIcon" type="TextureRect" parent="Safe/Layout/ShootPanel/ShootRows/LiveViews"]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("8_wrucu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LiveViewsLabel" type="Label" parent="Safe/Layout/ShootPanel/ShootRows/LiveViews"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+theme_override_colors/font_color = Color(1, 0.956863, 0.901961, 1)
+text = "0"
+vertical_alignment = 1
+
+[node name="ShootProgress" type="ProgressBar" parent="Safe/Layout/ShootPanel/ShootRows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+size_flags_horizontal = 3
+show_percentage = false
+
+[node name="QualityCaption" type="Label" parent="Safe/Layout/ShootPanel/ShootRows"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Качество: тапай «Фокус!»"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QualityBar" type="ProgressBar" parent="Safe/Layout/ShootPanel/ShootRows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp3e5")
+show_percentage = false
+
+[node name="FocusButton" type="Button" parent="Safe/Layout/ShootPanel/ShootRows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "Фокус!"
+icon = ExtResource("9_7qqjc")
+
+[node name="ShootButton" type="Button" parent="Safe/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 42
+text = "Снять ролик"
+icon = ExtResource("10_fb1ii")
+
+[node name="SecondaryButtons" type="HBoxContainer" parent="Safe/Layout"]
+layout_mode = 2
+
+[node name="UpgradesButton" type="Button" parent="Safe/Layout/SecondaryButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Апгрейды"
+icon = ExtResource("11_ryc6l")
+
+[node name="SoundButton" type="Button" parent="Safe/Layout/SecondaryButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 104)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_hkh0e")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s8vxb")
+icon = ExtResource("12_5btt6")
 
 [node name="Toast" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-anchor_left = 0.05
-anchor_top = 0.36
-anchor_right = 0.95
-anchor_bottom = 0.36
-theme_override_font_sizes/font_size = 32
-theme_override_constants/outline_size = 8
+anchor_left = 0.06
+anchor_top = 0.42
+anchor_right = 0.94
+anchor_bottom = 0.42
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1, 0.956863, 0.901961, 1)
+theme_override_constants/outline_size = 14
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="BottomBar" type="VBoxContainer" parent="."]
-layout_mode = 0
-anchor_top = 1.0
+[node name="FloatLayer" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = -40.0
-offset_right = -24.0
-offset_bottom = -40.0
-grow_vertical = 0
+mouse_filter = 2
 
-[node name="ShootPanel" type="PanelContainer" parent="BottomBar"]
+[node name="HeartsStream" type="CPUParticles2D" parent="."]
 unique_name_in_owner = true
-layout_mode = 2
+emitting = false
+amount = 6
+lifetime = 1.8
+texture = ExtResource("13_ndujm")
+emission_shape = 3
+emission_rect_extents = Vector2(200, 10)
+direction = Vector2(0, -1)
+spread = 25.0
+gravity = Vector2(0, -40)
+initial_velocity_min = 140.0
+initial_velocity_max = 220.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+scale_amount_min = 0.5
+scale_amount_max = 0.95
+color_ramp = SubResource("Gradient_odwsm")
 
-[node name="ShootRows" type="VBoxContainer" parent="BottomBar/ShootPanel"]
-layout_mode = 2
-
-[node name="ShootTopicLabel" type="Label" parent="BottomBar/ShootPanel/ShootRows"]
+[node name="HeartBurst" type="CPUParticles2D" parent="."]
 unique_name_in_owner = true
-layout_mode = 2
-text = "Снимаем"
-horizontal_alignment = 1
+emitting = false
+amount = 22
+lifetime = 1.4
+one_shot = true
+explosiveness = 0.9
+texture = ExtResource("13_ndujm")
+emission_shape = 1
+emission_sphere_radius = 40.0
+direction = Vector2(0, -1)
+spread = 55.0
+gravity = Vector2(0, 520)
+initial_velocity_min = 380.0
+initial_velocity_max = 620.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+scale_amount_min = 0.5
+scale_amount_max = 0.95
+color_ramp = SubResource("Gradient_vs1rf")
 
-[node name="ShootProgress" type="ProgressBar" parent="BottomBar/ShootPanel/ShootRows"]
+[node name="LikeBurst" type="CPUParticles2D" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 22)
-layout_mode = 2
-show_percentage = false
+emitting = false
+amount = 14
+lifetime = 1.4
+one_shot = true
+explosiveness = 0.9
+texture = ExtResource("14_tuoc0")
+emission_shape = 1
+emission_sphere_radius = 40.0
+direction = Vector2(0, -1)
+spread = 55.0
+gravity = Vector2(0, 520)
+initial_velocity_min = 380.0
+initial_velocity_max = 620.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+scale_amount_min = 0.5
+scale_amount_max = 0.95
+color_ramp = SubResource("Gradient_qe3hh")
 
-[node name="QualityCaption" type="Label" parent="BottomBar/ShootPanel/ShootRows"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Качество — тапай «Фокус»!"
-horizontal_alignment = 1
-
-[node name="QualityBar" type="ProgressBar" parent="BottomBar/ShootPanel/ShootRows"]
+[node name="Flash" type="ColorRect" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 22)
-layout_mode = 2
-show_percentage = false
-
-[node name="FocusButton" type="Button" parent="BottomBar/ShootPanel/ShootRows"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 130)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Фокус!"
-
-[node name="ShootButton" type="Button" parent="BottomBar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 130)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Снять ролик"
-
-[node name="SecondaryButtons" type="HBoxContainer" parent="BottomBar"]
-layout_mode = 2
-
-[node name="UpgradesButton" type="Button" parent="BottomBar/SecondaryButtons"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Апгрейды"
-
-[node name="SoundButton" type="Button" parent="BottomBar/SecondaryButtons"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Звук: вкл"
+visible = false
+material = SubResource("ShaderMaterial_nu8qi")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
