@@ -29,6 +29,15 @@ func build() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 
+	var glow: TextureRect = TextureRect.new()
+	glow.texture = load(ART + "light.svg")
+	glow.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	glow.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	glow.size = Vector2(1000.0, 1000.0)
+	glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	glow.name = "Glow"
+	add_child(glow)
+
 	char_root = Control.new()
 	char_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	char_root.size = Vector2(CHAR_W, CHAR_H)
@@ -56,6 +65,10 @@ func _process(delta: float) -> void:
 		return
 	var bob: float = sin(_time * 2.2) * 10.0
 	char_root.position = Vector2(size.x * 0.5 - CHAR_W * 0.5, size.y - CHAR_H - 90.0 + bob)
+	var glow_node: Node = get_node_or_null("Glow")
+	if glow_node != null:
+		var g2: TextureRect = glow_node as TextureRect
+		g2.position = Vector2(size.x * 0.5 - 500.0, size.y - 760.0 + bob * 0.5)
 	_tap_scale = lerpf(_tap_scale, 1.0, minf(delta * 9.0, 1.0))
 	character.scale = Vector2(_tap_scale, 2.0 - _tap_scale)
 
