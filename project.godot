@@ -25,5 +25,10 @@ window/handheld/orientation=1
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.137255, 0.12549, 0.180392, 1)
+
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
