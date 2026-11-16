@@ -10,7 +10,7 @@ signal offline_ready(amount: float)
 var BASE_INCOME: float = 0.4
 var ENERGY_MAX: int = 20
 var ENERGY_RESTORE_SEC: float = 45.0
-var STAGE_FOLLOWERS: Array = [0.0, 40.0, 250.0, 1200.0, 6000.0]
+var STAGE_FOLLOWERS: Array = [0.0, 20.0, 100.0, 500.0, 2000.0]
 
 var UPGRADES: Dictionary = {
 	"camera": {"name": "Камера", "desc": "+0.35 к доходу в секунду", "base": 30.0, "growth": 1.55, "add": 0.35},
@@ -40,6 +40,7 @@ var offline_gain: float = 0.0
 var boost_until: int = 0
 var piggy: float = 0.0
 var DEV_MONEY: float = 1000.0
+var DEV_FOLLOWERS: float = 120.0
 
 var _energy_progress: float = 0.0
 
@@ -50,6 +51,7 @@ func _ready() -> void:
 	if Save.is_new_game:
 		money += DEV_MONEY
 		total_earned += DEV_MONEY
+		followers += DEV_FOLLOWERS
 	stage = stage_for_followers()
 	if Save.seconds_away > 30:
 		offline_gain = per_sec() * float(Save.seconds_away)
@@ -135,7 +137,7 @@ func shoot() -> Dictionary:
 	videos += 1
 	var views: float = 40.0 + followers * 0.08 + per_sec() * 25.0
 	var gain: float = maxf(2.0, per_sec() * (6.0 + randf() * 6.0))
-	var new_followers: float = views * (0.03 + randf() * 0.02)
+	var new_followers: float = views * (0.06 + randf() * 0.05)
 	money += gain
 	total_earned += gain
 	followers += new_followers
