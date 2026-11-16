@@ -7,6 +7,8 @@ signal closed
 
 const Formulas := preload("res://scripts/gameplay/formulas.gd")
 const GameData := preload("res://scripts/data/game_data.gd")
+const UiFx := preload("res://scripts/fx/ui_fx.gd")
+const ICON_FILM: Texture2D = preload("res://assets/icons/film.svg")
 
 @onready var _list: VBoxContainer = %TopicList
 @onready var _energy_label: Label = %TopicEnergyLabel
@@ -18,6 +20,7 @@ var _refresh_timer: Timer
 func _ready() -> void:
 	visible = false
 	_close_button.pressed.connect(close)
+	UiFx.apply_press_feedback(self)
 	_refresh_timer = Timer.new()
 	_refresh_timer.wait_time = 1.0
 	_refresh_timer.timeout.connect(_rebuild)
@@ -27,6 +30,7 @@ func _ready() -> void:
 func open() -> void:
 	_rebuild()
 	visible = true
+	UiFx.pop($Center/Panel as Control, 1.04)
 	_refresh_timer.start()
 
 
@@ -40,11 +44,14 @@ func _rebuild() -> void:
 	for child: Node in _list.get_children():
 		_list.remove_child(child)
 		child.queue_free()
-	_energy_label.text = "Энергия: %d/%d · на ролик нужна 1" % [Economy.energy, Economy.energy_max()]
+	_energy_label.text = "Энергия %d/%d · ролик стоит 1" % [Economy.energy, Economy.energy_max()]
 	for topic: Dictionary in GameData.topics():
 		var topic_id: String = str(topic["id"])
 		var button: Button = Button.new()
-		button.custom_minimum_size = Vector2(0, 96)
+		button.custom_minimum_size = Vector2(0, 110)
+		button.icon = ICON_FILM
+		button.expand_icon = false
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		var info: String = "%s\nохват x%.1f · энергия %d" % [str(topic["name"]), float(topic["reach_power"]), int(topic["energy_cost"])]
 		var cooldown: int = Progress.topic_cooldown_left(topic_id)
@@ -56,6 +63,7 @@ func _rebuild() -> void:
 			button.disabled = true
 		button.text = info
 		button.pressed.connect(_on_topic_pressed.bind(topic_id))
+		UiFx.add_press_feedback(button)
 		_list.add_child(button)
 
 
