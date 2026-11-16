@@ -39,8 +39,8 @@ var stage: int = 0
 var offline_gain: float = 0.0
 var boost_until: int = 0
 var piggy: float = 0.0
-var DEV_MONEY: float = 1000.0
-var DEV_FOLLOWERS: float = 120.0
+var DEV_MONEY: float = 0.0
+var DEV_FOLLOWERS: float = 0.0
 
 var _energy_progress: float = 0.0
 
