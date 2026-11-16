@@ -51,6 +51,9 @@ func get_state() -> Dictionary:
 
 
 func save_now() -> void:
+	var game: Node = get_node_or_null("/root/Game")
+	if game != null and game.has_method("flush_to_save"):
+		game.call("flush_to_save")
 	data["last_seen"] = now_utc()
 	var file: FileAccess = FileAccess.open(TMP_PATH, FileAccess.WRITE)
 	if file == null:
