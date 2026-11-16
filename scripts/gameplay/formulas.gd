@@ -97,3 +97,26 @@ static func format_duration(seconds: int) -> String:
 	if minutes > 0:
 		return "%d мин %d с" % [minutes, secs]
 	return "%d с" % secs
+
+
+## Русские окончания: plural_ru(4, "подписчик", "подписчика", "подписчиков") → "подписчика".
+static func plural_ru(value: float, one: String, few: String, many: String) -> String:
+	var n: int = int(absf(floorf(value)))
+	var n100: int = n % 100
+	var n10: int = n % 10
+	if n100 >= 11 and n100 <= 14:
+		return many
+	if n10 == 1:
+		return one
+	if n10 >= 2 and n10 <= 4:
+		return few
+	return many
+
+
+## Доход в секунду с точностью для маленьких чисел: 0.24 → "0.24", 12.5 → "12.5", 3400 → "3.40K".
+static func format_rate(value: float) -> String:
+	if value >= 1000.0:
+		return format_number(value)
+	if value >= 10.0:
+		return "%.1f" % value
+	return "%.2f" % value
