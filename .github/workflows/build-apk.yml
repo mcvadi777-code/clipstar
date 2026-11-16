@@ -30,6 +30,15 @@ jobs:
           if [ -d "$SRC" ] && [ ! -d "$DST" ]; then cp -a "$SRC" "$DST"; fi
           ls -d "$DST" || echo "шаблоны не найдены"
 
+      - name: Стабильный debug keystore
+        run: |
+          if [ -f ci/debug.keystore.b64 ]; then
+            base64 -d ci/debug.keystore.b64 > "$HOME/.android/debug.keystore"
+            echo "keystore из репозитория: подпись стабильная"
+          else
+            echo "keystore в репозитории не найден — будет сгенерирован новый"
+          fi
+
       - name: Отладочный keystore
         run: |
           if [ ! -f ~/.android/debug.keystore ]; then
