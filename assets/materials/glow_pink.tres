@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/toon.gdshader" id="1_dvfj5"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_dvfj5")
+shader_parameter/albedo = Color(1, 0.419608, 0.603922, 1)
+shader_parameter/shade_color = null
+shader_parameter/mid_threshold = null
+shader_parameter/light_threshold = null
+shader_parameter/band_softness = null
+shader_parameter/mid_tone = null
+shader_parameter/rim_strength = 0.0
+shader_parameter/emission_strength = 1.2
