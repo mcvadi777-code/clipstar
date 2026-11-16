@@ -2,11 +2,34 @@
 	{
 		"id": "camera",
 		"name": "Камера",
-		"description": "Чётче картинка — больше охват и доход",
+		"description": "Чётче картинка: больше охват и доход. С 1-го уровня — камера на штативе.",
+		"icon": "res://assets/icons/camera.svg",
 		"base_cost": 50,
 		"cost_growth": 1.35,
 		"max_level": 6,
 		"reach_bonus_per_level": 0.10,
 		"income_bonus_per_level": 0.15
+	},
+	{
+		"id": "light",
+		"name": "Свет",
+		"description": "Кольцевая лампа: кадр ярче, ролики чаще попадают в рекомендации.",
+		"icon": "res://assets/icons/bulb.svg",
+		"base_cost": 120,
+		"cost_growth": 1.4,
+		"max_level": 5,
+		"reach_bonus_per_level": 0.15,
+		"income_bonus_per_level": 0.0
+	},
+	{
+		"id": "desk",
+		"name": "Стол",
+		"description": "Больше стол и техника: быстрее монтаж, выше доход и пассив.",
+		"icon": "res://assets/icons/desk.svg",
+		"base_cost": 200,
+		"cost_growth": 1.45,
+		"max_level": 5,
+		"reach_bonus_per_level": 0.0,
+		"income_bonus_per_level": 0.25
 	}
 ]
