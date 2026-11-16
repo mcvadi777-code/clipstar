@@ -14,6 +14,8 @@ var xp: float = 0.0
 var level: int = 1
 var total_views: float = 0.0
 var videos_made: int = 0
+## Рекорд просмотров одного ролика — для полосы на экране итога.
+var best_views: float = 0.0
 ## topic_id → UTC-время, когда тема снова доступна.
 var topic_ready_utc: Dictionary = {}
 
@@ -42,6 +44,7 @@ func apply_video(topic_id: String, views: float, subscribers_gain: float, xp_gai
 	subscribers += subscribers_gain
 	total_views += views
 	videos_made += 1
+	best_views = maxf(best_views, views)
 	xp += xp_gain
 	if not topic.is_empty():
 		topic_ready_utc[topic_id] = Save.now_utc() + int(topic["cooldown_seconds"])
@@ -62,6 +65,7 @@ func _commit() -> void:
 		"level": level,
 		"total_views": total_views,
 		"videos_made": videos_made,
+		"best_views": best_views,
 		"topic_ready_utc": topic_ready_utc,
 	})
 	stats_changed.emit()
@@ -73,6 +77,7 @@ func _apply_section(section: Dictionary) -> void:
 	level = maxi(int(section.get("level", 1)), 1)
 	total_views = maxf(float(section.get("total_views", 0.0)), 0.0)
 	videos_made = maxi(int(section.get("videos_made", 0)), 0)
+	best_views = maxf(float(section.get("best_views", 0.0)), 0.0)
 	topic_ready_utc = {}
 	var raw_cooldowns: Variant = section.get("topic_ready_utc", {})
 	if raw_cooldowns is Dictionary:
