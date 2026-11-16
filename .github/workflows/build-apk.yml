@@ -1,0 +1,66 @@
+name: build-apk
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+env:
+  GODOT_VERSION: "4.3"
+  EXPORT_NAME: ClipStar
+  EXPORT_PRESET: Android
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          submodules: recursive
+
+      - name: Кэш шаблонов экспорта
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/godot/export_templates
+          key: godot-templates-${{ env.GODOT_VERSION }}
+
+      - name: Подготовка шаблонов
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates
+          if [ -d "/root/.local/share/godot/export_templates/${GODOT_VERSION}.stable" ]; then
+            mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/
+          fi
+          mkdir -v -p ~/.config/godot ~/.android
+
+      - name: Отладочный keystore
+        run: |
+          if [ ! -f ~/.android/debug.keystore ]; then
+            keytool -keyalg RSA -genkeypair -alias androiddebugkey \
+              -keypass android -keystore ~/.android/debug.keystore -storepass android \
+              -dname "CN=Android Debug,O=Android,C=US" -validity 9999 -deststoretype pkcs12
+          fi
+
+      - name: Импорт проекта
+        run: godot --headless --path . --import || true
+
+      - name: Экспорт APK
+        run: |
+          mkdir -v -p build
+          godot --headless --path . --export-debug "${EXPORT_PRESET}" "build/${EXPORT_NAME}.apk" || \
+          godot --headless --path . --export-debug "Android" "build/${EXPORT_NAME}.apk"
+
+      - name: Проверка результата
+        run: |
+          ls -lh build/
+          test -f "build/${EXPORT_NAME}.apk" || (echo "APK не создан" && exit 1)
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXPORT_NAME }}-apk
+          path: build/*.apk
+          retention-days: 30
