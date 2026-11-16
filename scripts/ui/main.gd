@@ -247,6 +247,7 @@ func _on_studio_tap(pos: Vector2) -> void:
 	Game.do_tap()
 	studio.play_tap()
 	Sfx.play("tap")
+	_bills(pos)
 
 
 func _on_shoot() -> void:
@@ -471,6 +472,22 @@ func _spawn_float(text: String, color: Color) -> void:
 	tw.tween_property(l, "position:y", y - 190.0, 1.0)
 	tw.tween_property(l, "modulate:a", 0.0, 1.0)
 	tw.chain().tween_callback(l.queue_free)
+
+
+func _bills(pos: Vector2) -> void:
+	for i: int in 3:
+		var bill: TextureRect = _icon("icon_cash.svg", 44.0)
+		var start: Vector2 = studio.position + pos + Vector2(randf_range(-50.0, 50.0), randf_range(-30.0, 30.0))
+		bill.position = start
+		bill.rotation = randf_range(-0.4, 0.4)
+		float_layer.add_child(bill)
+		var tx: float = start.x + randf_range(-120.0, 120.0)
+		var ty: float = start.y - randf_range(220.0, 380.0)
+		var tw: Tween = create_tween()
+		tw.set_parallel(true)
+		tw.tween_property(bill, "position", Vector2(tx, ty), 0.85)
+		tw.tween_property(bill, "modulate:a", 0.0, 0.85)
+		tw.chain().tween_callback(bill.queue_free)
 
 
 func fmt(value: float) -> String:
