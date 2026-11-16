@@ -14,6 +14,8 @@ var character: TextureRect
 var stage: int = 0
 var _time: float = 0.0
 var _tap_scale: float = 1.0
+var _expression: String = "smile"
+var _expression_timer: float = 0.0
 
 
 func _ready() -> void:
@@ -44,7 +46,7 @@ func build() -> void:
 	add_child(char_root)
 
 	character = TextureRect.new()
-	character.texture = load(ART + "char.svg")
+	character.texture = load(ART + "char_smile.svg")
 	character.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	character.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	character.size = Vector2(CHAR_W, CHAR_H)
@@ -69,12 +71,25 @@ func _process(delta: float) -> void:
 	if glow_node != null:
 		var g2: TextureRect = glow_node as TextureRect
 		g2.position = Vector2(size.x * 0.5 - 500.0, size.y - 760.0 + bob * 0.5)
+	if _expression_timer > 0.0:
+		_expression_timer -= delta
+		if _expression_timer <= 0.0:
+			set_expression("smile")
 	_tap_scale = lerpf(_tap_scale, 1.0, minf(delta * 9.0, 1.0))
 	character.scale = Vector2(_tap_scale, 2.0 - _tap_scale)
 
 
+func set_expression(name: String) -> void:
+	if _expression == name or character == null:
+		return
+	_expression = name
+	character.texture = load(ART + "char_" + name + ".svg")
+	_expression_timer = 1.2
+
+
 func play_tap() -> void:
 	_tap_scale = 1.06
+	set_expression("wow")
 
 
 func _gui_input(event: InputEvent) -> void:
