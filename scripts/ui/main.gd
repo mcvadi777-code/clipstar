@@ -21,6 +21,8 @@ var lbl_task: Label
 var pb_task: ProgressBar
 var lbl_task_reward: Label
 var btn_sound: Button
+var btn_boost: Button
+var lbl_boost: Label
 var panel_kind: String = ""
 var _ui_timer: float = 0.0
 var _panel_timer: float = 0.0
@@ -144,8 +146,21 @@ func _build_bottom_bar() -> void:
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
 
+	btn_boost = _button("×2", Color("#ffb26b"), 40)
+	btn_boost.position = Vector2(950.0, 4.0)
+	btn_boost.size = Vector2(122.0, 140.0)
+	btn_boost.pressed.connect(_on_boost)
+	root.add_child(btn_boost)
+
+	lbl_boost = _label("", 20, Color("#2b2238"))
+	lbl_boost.position = Vector2(950.0, 104.0)
+	lbl_boost.size = Vector2(122.0, 26.0)
+	lbl_boost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl_boost.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(lbl_boost)
+
 	var shoot: Button = _button("Снять ролик", Color("#ff4f7b"), 46)
-	shoot.position = Vector2(140.0, 4.0)
+	shoot.position = Vector2(130.0, 4.0)
 	shoot.size = Vector2(800.0, 140.0)
 	shoot.pressed.connect(_on_shoot)
 	root.add_child(shoot)
@@ -262,6 +277,14 @@ func _on_tab(index: int) -> void:
 			_open_profile()
 
 
+func _on_boost() -> void:
+	if Game.is_boost():
+		return
+	Game.start_boost()
+	Sfx.play("fanfare")
+	_tick_ui()
+
+
 func _on_sound_pressed() -> void:
 	Sfx.muted = not Sfx.muted
 	_refresh_sound()
@@ -281,6 +304,13 @@ func _tick_ui() -> void:
 	lbl_level.text = "Ур. %d · до %d: %d/100 XP" % [Game.level(), Game.level() + 1, int(lv.x)]
 	pb_level.max_value = 100.0
 	pb_level.value = lv.x
+	if Game.is_boost():
+		var left: int = Game.boost_left()
+		lbl_boost.text = "%d:%02d" % [left / 60, left % 60]
+		btn_boost.disabled = true
+	else:
+		lbl_boost.text = "буст"
+		btn_boost.disabled = false
 	_refresh_task()
 
 
@@ -404,9 +434,21 @@ func _fill_profile() -> void:
 		"Роликов снято: %d" % Game.videos,
 		"Всего заработано: $%s" % fmt(Game.total_earned),
 		"Стадия студии: %d/5" % (Game.stage + 1),
+		"Копилка: $%s" % fmt(Game.piggy),
 	]
 	for line: String in lines:
 		overlay_body.add_child(_label(line, 30, Color.WHITE))
+	if Game.piggy > 0.0:
+		var claim: Button = _button("Забрать копилку", Color("#63d471"), 28)
+		claim.custom_minimum_size = Vector2(500.0, 90.0)
+		claim.pressed.connect(func() -> void:
+			var got: float = Game.claim_piggy()
+			Sfx.play("coin")
+			_spawn_float("+$" + fmt(got), Color("#63d471"))
+			Game.save_state()
+			_fill_profile()
+		)
+		overlay_body.add_child(claim)
 	var reset: Button = _button("Сбросить прогресс", Color("#3a3352"), 28)
 	reset.custom_minimum_size = Vector2(500.0, 90.0)
 	reset.pressed.connect(func() -> void:
