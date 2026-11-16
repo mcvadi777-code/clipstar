@@ -262,6 +262,7 @@ func _on_shoot() -> void:
 	_spawn_float("+" + fmt(float(result["money"])), Color("#ffd166"))
 	_spawn_float("+%d подписчиков" % int(float(result["followers"])), Color("#8fe6ff"))
 	studio.play_tap()
+	studio.set_expression("happy")
 	Game.save_state()
 
 
@@ -332,6 +333,7 @@ func _refresh_task() -> void:
 
 func _on_stage_changed(stage: int) -> void:
 	studio.set_stage(stage)
+	_flash()
 	Sfx.play("fanfare")
 	_spawn_float("Студия выросла до %d уровня!" % (stage + 1), Color("#ffd166"))
 
@@ -457,6 +459,18 @@ func _fill_profile() -> void:
 		_close_panel()
 	)
 	overlay_body.add_child(reset)
+
+
+func _flash() -> void:
+	var fl: ColorRect = ColorRect.new()
+	fl.color = Color(1.0, 1.0, 1.0, 0.0)
+	fl.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	float_layer.add_child(fl)
+	var tw: Tween = create_tween()
+	tw.tween_property(fl, "color:a", 0.85, 0.12)
+	tw.tween_property(fl, "color:a", 0.0, 0.5)
+	tw.tween_callback(fl.queue_free)
 
 
 func _spawn_float(text: String, color: Color) -> void:
