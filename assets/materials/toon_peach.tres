@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Material" path="res://assets/materials/outline.tres" id="1_ugmlh"]
+[ext_resource type="Shader" path="res://assets/shaders/toon.gdshader" id="2_4un46"]
+
+[resource]
+render_priority = 0
+next_pass = ExtResource("1_ugmlh")
+shader = ExtResource("2_4un46")
+shader_parameter/albedo = Color(1, 0.788235, 0.658824, 1)
+shader_parameter/shade_color = Color(0.356863, 0.247059, 0.54902, 1)
+shader_parameter/mid_threshold = null
+shader_parameter/light_threshold = null
+shader_parameter/band_softness = null
+shader_parameter/mid_tone = null
+shader_parameter/rim_strength = null
+shader_parameter/emission_strength = null
