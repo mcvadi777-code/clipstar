@@ -91,7 +91,7 @@ func _build_top_bar() -> void:
 	lbl_followers.position = Vector2(762.0, 20.0)
 	bar.add_child(lbl_followers)
 
-	var en: TextureRect = _icon("icon_camera.svg", 52.0)
+	var en: TextureRect = _icon("icon_bolt.svg", 52.0)
 	en.position = Vector2(700.0, 128.0)
 	bar.add_child(en)
 
