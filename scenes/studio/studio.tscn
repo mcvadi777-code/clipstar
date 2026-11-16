@@ -1,0 +1,212 @@
+[gd_scene load_steps=29 format=3]
+
+[ext_resource type="Script" path="res://scripts/studio/studio.gd" id="1_i23ol"]
+
+[sub_resource type="Environment" id="Environment_2gy6t"]
+background_mode = 1
+background_color = Color(0.105882, 0.0941176, 0.152941, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.75, 0.7, 0.9, 1)
+ambient_light_energy = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ldcy4"]
+albedo_color = Color(0.36, 0.3, 0.42, 1)
+roughness = 0.8
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_p6b2f"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wgrvd"]
+albedo_color = Color(0.98, 0.72, 0.78, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_01sds"]
+size = Vector3(10, 5, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fctty"]
+albedo_color = Color(0.95, 0.95, 0.98, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_41vvp"]
+size = Vector3(1.6, 0.08, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k111k"]
+albedo_color = Color(0.98, 0.98, 1, 1)
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_gjvy4"]
+size = Vector3(1.8, 0.08, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y7ybd"]
+albedo_color = Color(0.55, 0.45, 0.75, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_ov5it"]
+size = Vector3(1.6, 0.76, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x0ysy"]
+albedo_color = Color(0.1, 0.12, 0.2, 1)
+roughness = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_8jv6s"]
+size = Vector3(0.6, 0.38, 0.04)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5n1v6"]
+albedo_color = Color(0.3, 0.75, 0.95, 1)
+roughness = 0.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fij8j"]
+radius = 0.28
+height = 1.15
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wprai"]
+albedo_color = Color(1, 0.84, 0.72, 1)
+roughness = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_qrq57"]
+radius = 0.22
+height = 0.44
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2mh8t"]
+albedo_color = Color(0.35, 0.18, 0.12, 1)
+roughness = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_wh4vh"]
+radius = 0.24
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_idr7g"]
+albedo_color = Color(0.1, 0.1, 0.15, 1)
+roughness = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_faf7s"]
+radius = 0.03
+height = 0.06
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orhtg"]
+albedo_color = Color(0.1, 0.1, 0.15, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tsq02"]
+albedo_color = Color(0.15, 0.15, 0.18, 1)
+roughness = 0.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ta5r3"]
+top_radius = 0.03
+bottom_radius = 0.05
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q61to"]
+albedo_color = Color(0.2, 0.2, 0.24, 1)
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_14ydm"]
+size = Vector3(0.3, 0.22, 0.34)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dcxo6"]
+top_radius = 0.08
+bottom_radius = 0.09
+height = 0.18
+
+[node name="Studio" type="Node3D"]
+script = ExtResource("1_i23ol")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2gy6t")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.383022, -0.321394, 0, 0.642788, 0.766044, 0.5, -0.663414, 0.55667, 0, 0, 0)
+light_energy = 1.1
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 1.7, 3.6)
+keep_aspect = 0
+current = true
+fov = 62.0
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ldcy4")
+mesh = SubResource("PlaneMesh_p6b2f")
+
+[node name="BackWall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -2.2)
+material_override = SubResource("StandardMaterial3D_wgrvd")
+mesh = SubResource("BoxMesh_01sds")
+
+[node name="Shelf" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 2.3, -1.95)
+material_override = SubResource("StandardMaterial3D_fctty")
+mesh = SubResource("BoxMesh_41vvp")
+
+[node name="DeskTop" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -0.5)
+material_override = SubResource("StandardMaterial3D_k111k")
+mesh = SubResource("BoxMesh_gjvy4")
+
+[node name="DeskBase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, -0.5)
+material_override = SubResource("StandardMaterial3D_y7ybd")
+mesh = SubResource("BoxMesh_ov5it")
+
+[node name="Monitor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 1.05, -0.65)
+material_override = SubResource("StandardMaterial3D_x0ysy")
+mesh = SubResource("BoxMesh_8jv6s")
+
+[node name="Mira" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.25)
+
+[node name="Body" type="MeshInstance3D" parent="Mira"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+material_override = SubResource("StandardMaterial3D_5n1v6")
+mesh = SubResource("CapsuleMesh_fij8j")
+
+[node name="Head" type="MeshInstance3D" parent="Mira"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+material_override = SubResource("StandardMaterial3D_wprai")
+mesh = SubResource("SphereMesh_qrq57")
+
+[node name="Hair" type="MeshInstance3D" parent="Mira/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07, -0.05)
+material_override = SubResource("StandardMaterial3D_2mh8t")
+mesh = SubResource("SphereMesh_wh4vh")
+
+[node name="EyeL" type="MeshInstance3D" parent="Mira/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0.02, 0.2)
+material_override = SubResource("StandardMaterial3D_idr7g")
+mesh = SubResource("SphereMesh_faf7s")
+
+[node name="EyeR" type="MeshInstance3D" parent="Mira/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0.02, 0.2)
+material_override = SubResource("StandardMaterial3D_orhtg")
+mesh = SubResource("SphereMesh_faf7s")
+
+[node name="CameraRig" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 0, 0.5)
+
+[node name="Tripod" type="MeshInstance3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+material_override = SubResource("StandardMaterial3D_tsq02")
+mesh = SubResource("CylinderMesh_ta5r3")
+
+[node name="CameraBody" type="MeshInstance3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+material_override = SubResource("StandardMaterial3D_q61to")
+mesh = SubResource("BoxMesh_14ydm")
+
+[node name="Lens" type="MeshInstance3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.3, -0.24)
+mesh = SubResource("CylinderMesh_dcxo6")
+
+[node name="RecLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 1.55, 0.5)
+light_color = Color(1, 0.15, 0.2, 1)
+light_energy = 1.5
+omni_range = 2.5
+
+[node name="NeonLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 2.6, -1.7)
+light_color = Color(0.7, 0.4, 1, 1)
+light_energy = 1.2
+omni_range = 3.5
