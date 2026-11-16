@@ -43,6 +43,7 @@ var DEV_MONEY: float = 0.0
 var DEV_FOLLOWERS: float = 0.0
 
 var _energy_progress: float = 0.0
+var _level: int = 1
 
 
 func _ready() -> void:
@@ -53,6 +54,7 @@ func _ready() -> void:
 		total_earned += DEV_MONEY
 		followers += DEV_FOLLOWERS
 	stage = stage_for_followers()
+	_level = level()
 	if Save.seconds_away > 30:
 		offline_gain = per_sec() * float(Save.seconds_away)
 		if offline_gain > 0.5:
@@ -74,6 +76,16 @@ func _process(delta: float) -> void:
 			energy += 1
 			emit_signal("stats_changed")
 	_check_tasks()
+	var lv: int = level()
+	if lv != _level:
+		var bonus: float = 25.0 * float(lv)
+		money += bonus
+		total_earned += bonus
+		_level = lv
+		emit_signal("float_text", "Уровень %d! +$%s" % [lv, format_money(bonus)], Color(1.0, 0.84, 0.4))
+		emit_signal("stats_changed")
+		if has_node("/root/Sfx"):
+			get_node("/root/Sfx").call("play", "fanfare")
 	var new_stage: int = stage_for_followers()
 	if new_stage != stage:
 		stage = new_stage
@@ -288,6 +300,7 @@ func reset_progress() -> void:
 	upgrades = {"camera": 0, "light": 0, "desk": 0, "edit": 0}
 	task_index = 0
 	stage = 0
+	_level = 1
 	save_state()
 	emit_signal("stats_changed")
 	emit_signal("stage_changed", stage)
