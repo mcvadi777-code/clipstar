@@ -39,6 +39,9 @@ var stage: int = 0
 var offline_gain: float = 0.0
 var boost_until: int = 0
 var piggy: float = 0.0
+var last_daily: int = 0
+var daily_streak: int = 0
+var DAILY_BASE: float = 120.0
 var DEV_MONEY: float = 0.0
 var DEV_FOLLOWERS: float = 0.0
 
@@ -114,6 +117,30 @@ func start_boost() -> void:
 	boost_until = Save.now_utc() + 900
 	emit_signal("stats_changed")
 	emit_signal("float_text", "Буст x2 на 15 минут", Color(1.0, 0.72, 0.3))
+
+
+func daily_available() -> bool:
+	return Save.now_utc() - last_daily >= 86400
+
+
+func daily_amount() -> float:
+	return DAILY_BASE * (1.0 + float(daily_streak) * 0.5) * (1.0 + per_sec())
+
+
+func claim_daily() -> float:
+	if not daily_available():
+		return 0.0
+	var amount: float = daily_amount()
+	if Save.now_utc() - last_daily < 172800:
+		daily_streak += 1
+	else:
+		daily_streak = 1
+	last_daily = Save.now_utc()
+	money += amount
+	total_earned += amount
+	emit_signal("float_text", "Ежедневная награда +$" + format_money(amount), Color(1.0, 0.84, 0.4))
+	emit_signal("stats_changed")
+	return amount
 
 
 func claim_piggy() -> float:
@@ -268,6 +295,8 @@ func flush_to_save() -> void:
 	data["task_index"] = task_index
 	data["boost_until"] = boost_until
 	data["piggy"] = piggy
+	data["last_daily"] = last_daily
+	data["daily_streak"] = daily_streak
 
 
 func save_state() -> void:
@@ -285,6 +314,8 @@ func _load_state() -> void:
 	task_index = int(data.get("task_index", 0))
 	boost_until = int(data.get("boost_until", 0))
 	piggy = float(data.get("piggy", 0.0))
+	last_daily = int(data.get("last_daily", 0))
+	daily_streak = int(data.get("daily_streak", 0))
 	var saved_up: Variant = data.get("upgrades", {})
 	if saved_up is Dictionary:
 		for id: String in UPGRADES.keys():
