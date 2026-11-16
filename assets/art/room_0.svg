@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1720" viewBox="0 0 1080 1720">
-<defs><linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a6a8c"/><stop offset="1" stop-color="#93819f"/></linearGradient>
-<linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#463a58"/><stop offset="1" stop-color="#211b30"/></linearGradient></defs>
-<rect x="0" y="0" width="1080" height="1290" fill="url(#wall)"/>
-<rect x="0" y="1290" width="1080" height="430" fill="url(#floor)"/>
+
+<rect x="0" y="0" width="1080" height="1290" fill="#93819f"/>
+<rect x="0" y="0" width="1080" height="1290" fill="#7a6a8c" opacity="0.45"/>
+<rect x="0" y="870" width="1080" height="420" fill="#7a6a8c" opacity="0.35"/>
+<rect x="0" y="1290" width="1080" height="430" fill="#463a58"/>
+<rect x="0" y="1510" width="1080" height="210" fill="#211b30" opacity="0.55"/>
 <rect x="0" y="1272" width="1080" height="26" fill="#2b2238" opacity="0.7"/>
 <ellipse cx="540" cy="1520" rx="440" ry="92" fill="#5f4f78"/>
 <ellipse cx="540" cy="1520" rx="310" ry="62" fill="#ffffff" opacity="0.10"/>
