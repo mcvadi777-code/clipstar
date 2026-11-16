@@ -116,6 +116,21 @@ func passive_per_second() -> float:
 	return Formulas.passive_per_second(Progress.subscribers, income_multiplier())
 
 
+## Из чего складывается пассивный доход — для подсказки в HUD.
+func passive_breakdown() -> Dictionary:
+	var per_sub: float = GameData.num("passive_per_subscriber_per_second")
+	return {
+		"base": GameData.num("passive_base_per_second"),
+		"subscribers": Progress.subscribers,
+		"per_subscriber": per_sub,
+		"from_subscribers": Progress.subscribers * per_sub,
+		"income_multiplier": income_multiplier(),
+		"total": passive_per_second(),
+		"offline_efficiency": GameData.num("offline_efficiency"),
+		"offline_max_hours": GameData.num("offline_max_hours"),
+	}
+
+
 func has_pending_offline() -> bool:
 	return pending_offline_coins >= 1.0 and pending_offline_seconds >= int(GameData.num("offline_min_seconds_to_show"))
 
