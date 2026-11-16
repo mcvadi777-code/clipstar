@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/studio/studio.tscn" id="2_studio"]
@@ -8,6 +8,14 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/result_popup.tscn" id="6_result"]
 [ext_resource type="PackedScene" path="res://scenes/ui/upgrade_panel.tscn" id="7_upgrade"]
 [ext_resource type="PackedScene" path="res://scenes/ui/offline_popup.tscn" id="8_offline"]
+[ext_resource type="Shader" path="res://assets/shaders/vignette.gdshader" id="9_vignette"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+shader = ExtResource("9_vignette")
+shader_parameter/tint = Color(0.168627, 0.117647, 0.247059, 1)
+shader_parameter/inner_radius = 0.55
+shader_parameter/outer_radius = 1.15
+shader_parameter/strength = 0.45
 
 [node name="Main" type="Node"]
 script = ExtResource("1_main")
@@ -16,6 +24,18 @@ script = ExtResource("1_main")
 
 [node name="VideoShoot" type="Node" parent="."]
 script = ExtResource("3_shoot")
+
+[node name="PostFX" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Vignette" type="ColorRect" parent="PostFX"]
+material = SubResource("ShaderMaterial_vignette")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="UI" type="CanvasLayer" parent="."]
 
