@@ -3,7 +3,8 @@ extends Node
 ## тапает «Фокус» (тапы = качество 0..1) → расчёт просмотров/монет/подписчиков → начисление.
 
 signal shoot_started(topic: Dictionary)
-signal shoot_progress(progress01: float, quality01: float)
+## live_views — просмотры, «набежавшие» к этому моменту съёмки (для тикающего счётчика).
+signal shoot_progress(progress01: float, quality01: float, live_views: float)
 signal shoot_finished(result: Dictionary)
 
 const Formulas := preload("res://scripts/gameplay/formulas.gd")
@@ -53,7 +54,7 @@ func start(topic_id: String) -> bool:
 	is_shooting = true
 	set_process(true)
 	shoot_started.emit(_topic)
-	shoot_progress.emit(0.0, 0.0)
+	shoot_progress.emit(0.0, 0.0, 0.0)
 	return true
 
 
@@ -61,7 +62,7 @@ func register_tap() -> void:
 	if not is_shooting:
 		return
 	_taps += 1
-	shoot_progress.emit(clampf(_elapsed / _duration, 0.0, 1.0), quality01())
+	_emit_progress()
 
 
 func quality01() -> float:
@@ -70,9 +71,15 @@ func quality01() -> float:
 
 func _process(delta: float) -> void:
 	_elapsed += delta
-	shoot_progress.emit(clampf(_elapsed / _duration, 0.0, 1.0), quality01())
+	_emit_progress()
 	if _elapsed >= _duration:
 		_finish()
+
+
+func _emit_progress() -> void:
+	var progress: float = clampf(_elapsed / _duration, 0.0, 1.0)
+	var expected: float = Formulas.views(float(_topic["reach_power"]), Progress.subscribers, Economy.reach_multiplier(), quality01(), false)
+	shoot_progress.emit(progress, quality01(), floorf(expected * progress))
 
 
 func _finish() -> void:
@@ -86,6 +93,7 @@ func _finish() -> void:
 	var subs: float = Formulas.subscribers_gain(views, _rng)
 	var xp_gain: float = Formulas.video_xp(power, quality, viral)
 	Economy.add_coins(coins)
+	var previous_best: float = Progress.best_views
 	var levels: int = Progress.apply_video(str(_topic["id"]), views, subs, xp_gain)
 	Save.save_now()
 	shoot_finished.emit({
@@ -99,4 +107,6 @@ func _finish() -> void:
 		"xp": xp_gain,
 		"levels_gained": levels,
 		"level": Progress.level,
+		"previous_best_views": previous_best,
+		"is_record": views > previous_best,
 	})
