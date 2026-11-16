@@ -245,7 +245,7 @@ static func format_money(value: float) -> String:
 	return "%.2fB" % (value / 1000000000.0)
 
 
-func save_state() -> void:
+func flush_to_save() -> void:
 	var data: Dictionary = Save.get_state()
 	data["money"] = money
 	data["followers"] = followers
@@ -256,6 +256,10 @@ func save_state() -> void:
 	data["task_index"] = task_index
 	data["boost_until"] = boost_until
 	data["piggy"] = piggy
+
+
+func save_state() -> void:
+	flush_to_save()
 	Save.save_now()
 
 
