@@ -37,6 +37,9 @@ var upgrades: Dictionary = {"camera": 0, "light": 0, "desk": 0, "edit": 0}
 var task_index: int = 0
 var stage: int = 0
 var offline_gain: float = 0.0
+var boost_until: int = 0
+var piggy: float = 0.0
+var DEV_MONEY: float = 1000.0
 
 var _energy_progress: float = 0.0
 
@@ -44,6 +47,9 @@ var _energy_progress: float = 0.0
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_load_state()
+	if Save.is_new_game:
+		money += DEV_MONEY
+		total_earned += DEV_MONEY
 	stage = stage_for_followers()
 	if Save.seconds_away > 30:
 		offline_gain = per_sec() * float(Save.seconds_away)
@@ -55,8 +61,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	money += per_sec() * delta
-	total_earned += per_sec() * delta
+	var gain: float = per_sec() * delta
+	money += gain
+	total_earned += gain
+	piggy = minf(piggy + gain * 0.1, 5000.0)
 	if energy < ENERGY_MAX:
 		_energy_progress += delta
 		if _energy_progress >= ENERGY_RESTORE_SEC:
@@ -72,9 +80,34 @@ func _process(delta: float) -> void:
 
 func per_sec() -> float:
 	var value: float = BASE_INCOME
+	if is_boost():
+		value *= 2.0
 	for id: String in UPGRADES.keys():
 		var level: int = int(upgrades.get(id, 0))
 		value += float((UPGRADES[id] as Dictionary)["add"]) * float(level)
+	return value
+
+
+func is_boost() -> bool:
+	return Save.now_utc() < boost_until
+
+
+func boost_left() -> int:
+	return maxi(boost_until - Save.now_utc(), 0)
+
+
+func start_boost() -> void:
+	boost_until = Save.now_utc() + 900
+	emit_signal("stats_changed")
+	emit_signal("float_text", "Буст x2 на 15 минут", Color(1.0, 0.72, 0.3))
+
+
+func claim_piggy() -> float:
+	var value: float = piggy
+	piggy = 0.0
+	money += value
+	total_earned += value
+	emit_signal("stats_changed")
 	return value
 
 
@@ -219,6 +252,8 @@ func save_state() -> void:
 	data["total_earned"] = total_earned
 	data["upgrades"] = upgrades.duplicate(true)
 	data["task_index"] = task_index
+	data["boost_until"] = boost_until
+	data["piggy"] = piggy
 	Save.save_now()
 
 
@@ -230,6 +265,8 @@ func _load_state() -> void:
 	energy = int(data.get("energy", ENERGY_MAX))
 	total_earned = float(data.get("total_earned", 0.0))
 	task_index = int(data.get("task_index", 0))
+	boost_until = int(data.get("boost_until", 0))
+	piggy = float(data.get("piggy", 0.0))
 	var saved_up: Variant = data.get("upgrades", {})
 	if saved_up is Dictionary:
 		for id: String in UPGRADES.keys():
