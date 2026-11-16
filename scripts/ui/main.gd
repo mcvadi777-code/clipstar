@@ -498,6 +498,19 @@ func _fill_profile() -> void:
 			_fill_profile()
 		)
 		overlay_body.add_child(claim)
+	if Game.daily_available():
+		var daily: Button = _button("Забрать ежедневную награду · $%s" % fmt(Game.daily_amount()), Color("#ffd166"), 28)
+		daily.custom_minimum_size = Vector2(700.0, 90.0)
+		daily.pressed.connect(func() -> void:
+			var got: float = Game.claim_daily()
+			Sfx.play("fanfare")
+			_spawn_float("+$" + fmt(got), Color("#ffd166"))
+			Game.save_state()
+			_fill_profile()
+		)
+		overlay_body.add_child(daily)
+	else:
+		overlay_body.add_child(_label("Ежедневная награда: серия %d дн." % Game.daily_streak, 26, Color("#cfc6e6")))
 	var reset: Button = _button("Сбросить прогресс", Color("#3a3352"), 28)
 	reset.custom_minimum_size = Vector2(500.0, 90.0)
 	reset.pressed.connect(func() -> void:
