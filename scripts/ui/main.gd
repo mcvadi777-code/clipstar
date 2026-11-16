@@ -52,6 +52,7 @@ func _build() -> void:
 	_build_top_bar()
 	_build_task_card()
 	_build_bottom_bar()
+	_build_side_buttons()
 
 	float_layer = Control.new()
 	float_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -73,8 +74,8 @@ func _build_top_bar() -> void:
 	cash.position = Vector2(26.0, 20.0)
 	bar.add_child(cash)
 
-	lbl_money = _label("0.00", 72, Color.WHITE)
-	lbl_money.position = Vector2(132.0, 2.0)
+	lbl_money = _label("0.00", 84, Color.WHITE)
+	lbl_money.position = Vector2(132.0, -6.0)
 	bar.add_child(lbl_money)
 
 	var bolt: TextureRect = _icon("icon_bolt.svg", 46.0)
@@ -146,19 +147,6 @@ func _build_bottom_bar() -> void:
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
 
-	btn_boost = _button("×2", Color("#ffb26b"), 40)
-	btn_boost.position = Vector2(950.0, 4.0)
-	btn_boost.size = Vector2(122.0, 140.0)
-	btn_boost.pressed.connect(_on_boost)
-	root.add_child(btn_boost)
-
-	lbl_boost = _label("", 20, Color("#2b2238"))
-	lbl_boost.position = Vector2(950.0, 104.0)
-	lbl_boost.size = Vector2(122.0, 26.0)
-	lbl_boost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lbl_boost.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.add_child(lbl_boost)
-
 	var shoot: Button = _button("Снять ролик", Color("#ff4f7b"), 46)
 	shoot.position = Vector2(130.0, 4.0)
 	shoot.size = Vector2(800.0, 140.0)
@@ -191,6 +179,64 @@ func _build_bottom_bar() -> void:
 		var idx: int = i
 		b.pressed.connect(func() -> void: _on_tab(idx))
 		tabs.add_child(b)
+
+
+func _build_side_buttons() -> void:
+	var layer: Control = Control.new()
+	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(layer)
+
+	var tap_btn: Button = _button("", Color("#7ee0c0"), 24)
+	tap_btn.position = Vector2(24.0, TOP_H + 40.0)
+	tap_btn.size = Vector2(132.0, 132.0)
+	tap_btn.pressed.connect(_on_tap_button)
+	layer.add_child(tap_btn)
+	_center_icon(tap_btn, "icon_coin.svg", 64.0)
+
+	btn_boost = _button("", Color("#ffb26b"), 24)
+	btn_boost.position = Vector2(24.0, TOP_H + 196.0)
+	btn_boost.size = Vector2(132.0, 132.0)
+	btn_boost.pressed.connect(_on_boost)
+	layer.add_child(btn_boost)
+	_center_icon(btn_boost, "icon_bolt.svg", 64.0)
+
+	lbl_boost = _label("", 20, Color("#3a2430"))
+	lbl_boost.position = Vector2(24.0, TOP_H + 300.0)
+	lbl_boost.size = Vector2(132.0, 26.0)
+	lbl_boost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	layer.add_child(lbl_boost)
+
+	var shop_btn: Button = _button("", Color("#c9a0ff"), 24)
+	shop_btn.position = Vector2(24.0, TOP_H + 352.0)
+	shop_btn.size = Vector2(132.0, 132.0)
+	shop_btn.pressed.connect(_open_upgrades)
+	layer.add_child(shop_btn)
+	_center_icon(shop_btn, "icon_camera.svg", 64.0)
+
+	var pig_btn: Button = _button("", Color("#ffd166"), 22)
+	pig_btn.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	pig_btn.offset_left = -156.0
+	pig_btn.offset_top = -BOTTOM_H - 156.0
+	pig_btn.offset_right = -24.0
+	pig_btn.offset_bottom = -BOTTOM_H - 24.0
+	pig_btn.pressed.connect(_open_profile)
+	layer.add_child(pig_btn)
+	_center_icon(pig_btn, "icon_star.svg", 56.0)
+
+
+func _center_icon(btn: Button, file: String, px: float) -> void:
+	var ic: TextureRect = _icon(file, px)
+	ic.position = Vector2((btn.size.x - px) * 0.5, (btn.size.y - px) * 0.5)
+	ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	btn.add_child(ic)
+
+
+func _on_tap_button() -> void:
+	Game.do_tap()
+	studio.play_tap()
+	Sfx.play("tap")
+	_bills(Vector2(studio.size.x * 0.5, studio.size.y * 0.6))
 
 
 func _build_overlay() -> void:
