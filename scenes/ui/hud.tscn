@@ -1,0 +1,158 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_tww58"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("1_tww58")
+
+[node name="TopBar" type="PanelContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 40.0
+offset_right = -20.0
+
+[node name="Rows" type="VBoxContainer" parent="TopBar"]
+layout_mode = 2
+
+[node name="Row1" type="HBoxContainer" parent="TopBar/Rows"]
+layout_mode = 2
+
+[node name="CoinsLabel" type="Label" parent="TopBar/Rows/Row1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 36
+text = "Монеты: 0"
+
+[node name="IncomeLabel" type="Label" parent="TopBar/Rows/Row1"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "+0/с"
+horizontal_alignment = 2
+
+[node name="Row2" type="HBoxContainer" parent="TopBar/Rows"]
+layout_mode = 2
+
+[node name="SubsLabel" type="Label" parent="TopBar/Rows/Row2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Подписчики: 0"
+
+[node name="LevelLabel" type="Label" parent="TopBar/Rows/Row2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Уровень 1"
+horizontal_alignment = 2
+
+[node name="XpBar" type="ProgressBar" parent="TopBar/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+show_percentage = false
+
+[node name="Row3" type="HBoxContainer" parent="TopBar/Rows"]
+layout_mode = 2
+
+[node name="EnergyLabel" type="Label" parent="TopBar/Rows/Row3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Энергия: 20/20"
+
+[node name="EnergyTimerLabel" type="Label" parent="TopBar/Rows/Row3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 2
+
+[node name="Toast" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.05
+anchor_top = 0.36
+anchor_right = 0.95
+anchor_bottom = 0.36
+theme_override_font_sizes/font_size = 32
+theme_override_constants/outline_size = 8
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BottomBar" type="VBoxContainer" parent="."]
+layout_mode = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -40.0
+offset_right = -24.0
+offset_bottom = -40.0
+grow_vertical = 0
+
+[node name="ShootPanel" type="PanelContainer" parent="BottomBar"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ShootRows" type="VBoxContainer" parent="BottomBar/ShootPanel"]
+layout_mode = 2
+
+[node name="ShootTopicLabel" type="Label" parent="BottomBar/ShootPanel/ShootRows"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Снимаем"
+horizontal_alignment = 1
+
+[node name="ShootProgress" type="ProgressBar" parent="BottomBar/ShootPanel/ShootRows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+show_percentage = false
+
+[node name="QualityCaption" type="Label" parent="BottomBar/ShootPanel/ShootRows"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Качество — тапай «Фокус»!"
+horizontal_alignment = 1
+
+[node name="QualityBar" type="ProgressBar" parent="BottomBar/ShootPanel/ShootRows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+show_percentage = false
+
+[node name="FocusButton" type="Button" parent="BottomBar/ShootPanel/ShootRows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Фокус!"
+
+[node name="ShootButton" type="Button" parent="BottomBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Снять ролик"
+
+[node name="SecondaryButtons" type="HBoxContainer" parent="BottomBar"]
+layout_mode = 2
+
+[node name="UpgradesButton" type="Button" parent="BottomBar/SecondaryButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Апгрейды"
+
+[node name="SoundButton" type="Button" parent="BottomBar/SecondaryButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Звук: вкл"
