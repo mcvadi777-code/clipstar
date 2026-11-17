@@ -6,7 +6,7 @@ signal tapped(pos: Vector2)
 
 const ART: String = "res://assets/art_hi/"
 const BG_STAGES: Array = ["bg_yard", "bg_yard", "bg_bridge", "bg_bridge", "bg_rich"]
-const CHAR_SCALE: float = 0.72
+const CHAR_SCALE: float = 0.62
 
 var bg: TextureRect
 var char_root: Control
@@ -55,7 +55,7 @@ func build() -> void:
 	var body: TextureRect = _part("char_body_hoodie", Vector2(290.0, 230.0), Vector2(310.0, 440.0))
 	body.modulate = Color("#8e93a1")
 
-	arm = _part("char_arm", Vector2(540.0, 300.0), Vector2(120.0, 520.0))
+	arm = _part("char_arm", Vector2(556.0, 300.0), Vector2(120.0, 520.0))
 	arm.pivot_offset = Vector2(60.0, 60.0)
 	arm.modulate = Color("#8e93a1")
 
@@ -64,7 +64,7 @@ func build() -> void:
 	var hair: TextureRect = _part("char_hair", Vector2(320.0, -150.0), Vector2(330.0, 200.0))
 	hair.modulate = Color("#5b3f2e")
 
-	mouth = _part("mouth_smile", Vector2(445.0, 130.0), Vector2(78.0, 52.0))
+	mouth = _part("mouth_smile", Vector2(428.0, 92.0), Vector2(86.0, 58.0))
 
 
 func _part(file: String, pos: Vector2, sz: Vector2) -> TextureRect:
@@ -112,7 +112,7 @@ func _process(delta: float) -> void:
 	if char_root == null:
 		return
 	var bob: float = sin(_time * 2.1) * 8.0
-	char_root.position = Vector2(size.x * 0.5 - 380.0, size.y - 800.0 + bob)
+	char_root.position = Vector2(size.x * 0.5 - 380.0 * CHAR_SCALE, size.y - 997.0 + bob)
 	_tap_scale = lerpf(_tap_scale, 1.0, minf(delta * 8.0, 1.0))
 	char_root.scale = Vector2(CHAR_SCALE * _tap_scale, CHAR_SCALE * (2.0 - _tap_scale))
 	if _mouth_timer > 0.0:
