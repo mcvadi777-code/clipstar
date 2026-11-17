@@ -43,8 +43,8 @@ func _ready() -> void:
 func _build() -> void:
 	studio = StudioView.new()
 	studio.set_anchors_preset(Control.PRESET_FULL_RECT)
-	studio.offset_top = TOP_H
-	studio.offset_bottom = -BOTTOM_H
+	studio.offset_top = 0
+	studio.offset_bottom = 0
 	add_child(studio)
 	studio.tapped.connect(_on_studio_tap)
 
