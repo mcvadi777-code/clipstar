@@ -1,21 +1,23 @@
 class_name StudioView
 extends Control
-## Сцена студии: фон по стадии, персонаж, анимация на тап.
+## Сцена: фон по стадии + персонаж из слоёв, анимация на тап.
 
 signal tapped(pos: Vector2)
 
-const ART: String = "res://assets/art/"
-const CHAR_W: float = 300.0
-const CHAR_H: float = 733.0
+const ART: String = "res://assets/art_hi/"
+const BG_STAGES: Array = ["bg_yard", "bg_yard", "bg_bridge", "bg_bridge", "bg_rich"]
+const CHAR_SCALE: float = 0.72
 
 var bg: TextureRect
 var char_root: Control
-var character: TextureRect
+var shadow: TextureRect
+var mouth: TextureRect
+var arm: TextureRect
 var stage: int = 0
+var expression: String = "smile"
 var _time: float = 0.0
 var _tap_scale: float = 1.0
-var _expression: String = "smile"
-var _expression_timer: float = 0.0
+var _mouth_timer: float = 0.0
 
 
 func _ready() -> void:
@@ -24,6 +26,12 @@ func _ready() -> void:
 
 
 func build() -> void:
+	var sky: ColorRect = ColorRect.new()
+	sky.color = Color("#6ec6f5")
+	sky.set_anchors_preset(Control.PRESET_FULL_RECT)
+	sky.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(sky)
+
 	bg = TextureRect.new()
 	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
@@ -31,65 +39,86 @@ func build() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 
-	var glow: TextureRect = TextureRect.new()
-	glow.texture = load(ART + "light.svg")
-	glow.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	glow.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	glow.size = Vector2(1000.0, 1000.0)
-	glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	glow.name = "Glow"
-	add_child(glow)
-
 	char_root = Control.new()
 	char_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	char_root.size = Vector2(CHAR_W, CHAR_H)
+	char_root.size = Vector2(760.0, 1060.0)
+	char_root.scale = Vector2(CHAR_SCALE, CHAR_SCALE)
 	add_child(char_root)
 
-	character = TextureRect.new()
-	character.texture = load(ART + "char_smile.svg")
-	character.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	character.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	character.size = Vector2(CHAR_W, CHAR_H)
-	character.pivot_offset = Vector2(CHAR_W * 0.5, CHAR_H)
-	character.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	char_root.add_child(character)
+	shadow = _part("char_shadow", Vector2(-10.0, 960.0), Vector2(1000.0, 176.0))
+
+	var leg_l: TextureRect = _part("char_leg", Vector2(210.0, 520.0), Vector2(150.0, 970.0))
+	leg_l.modulate = Color("#5b6478")
+	var leg_r: TextureRect = _part("char_leg", Vector2(400.0, 520.0), Vector2(150.0, 970.0))
+	leg_r.modulate = Color("#525b6e")
+
+	var body: TextureRect = _part("char_body_hoodie", Vector2(290.0, 230.0), Vector2(310.0, 440.0))
+	body.modulate = Color("#8e93a1")
+
+	arm = _part("char_arm", Vector2(540.0, 300.0), Vector2(120.0, 520.0))
+	arm.pivot_offset = Vector2(60.0, 60.0)
+	arm.modulate = Color("#8e93a1")
+
+	var head: TextureRect = _part("char_head", Vector2(330.0, -110.0), Vector2(310.0, 344.0))
+
+	var hair: TextureRect = _part("char_hair", Vector2(320.0, -150.0), Vector2(330.0, 200.0))
+	hair.modulate = Color("#5b3f2e")
+
+	mouth = _part("mouth_smile", Vector2(445.0, 130.0), Vector2(78.0, 52.0))
+
+
+func _part(file: String, pos: Vector2, sz: Vector2) -> TextureRect:
+	var t: TextureRect = TextureRect.new()
+	t.texture = load(ART + file + ".webp")
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	t.position = pos
+	t.size = sz
+	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	char_root.add_child(t)
+	return t
 
 
 func set_stage(value: int) -> void:
 	stage = clampi(value, 0, 4)
 	if bg != null:
-		bg.texture = load(ART + "room_" + str(stage) + ".svg")
+		bg.texture = load(ART + str(BG_STAGES[stage]) + ".webp")
+
+
+func set_expression(name: String) -> void:
+	if expression == name or mouth == null:
+		return
+	expression = name
+	match name:
+		"wow":
+			mouth.texture = load(ART + "mouth_open.webp")
+		"happy":
+			mouth.texture = load(ART + "mouth_smile.webp")
+		_:
+			mouth.texture = load(ART + "mouth_neutral.webp")
+	_mouth_timer = 1.4
+
+
+func play_tap() -> void:
+	_tap_scale = 1.05
+	set_expression("wow")
+	var tw: Tween = create_tween()
+	tw.tween_property(arm, "rotation", -0.5, 0.1)
+	tw.tween_property(arm, "rotation", 0.0, 0.24)
 
 
 func _process(delta: float) -> void:
 	_time += delta
 	if char_root == null:
 		return
-	var bob: float = sin(_time * 2.2) * 10.0
-	char_root.position = Vector2(size.x * 0.5 - CHAR_W * 0.5, size.y - CHAR_H - 90.0 + bob)
-	var glow_node: Node = get_node_or_null("Glow")
-	if glow_node != null:
-		var g2: TextureRect = glow_node as TextureRect
-		g2.position = Vector2(size.x * 0.5 - 500.0, size.y - 760.0 + bob * 0.5)
-	if _expression_timer > 0.0:
-		_expression_timer -= delta
-		if _expression_timer <= 0.0:
-			set_expression("smile")
-	_tap_scale = lerpf(_tap_scale, 1.0, minf(delta * 9.0, 1.0))
-	character.scale = Vector2(_tap_scale, 2.0 - _tap_scale)
-
-
-func set_expression(name: String) -> void:
-	if _expression == name or character == null:
-		return
-	_expression = name
-	character.texture = load(ART + "char_" + name + ".svg")
-	_expression_timer = 1.2
-
-
-func play_tap() -> void:
-	_tap_scale = 1.06
-	set_expression("wow")
+	var bob: float = sin(_time * 2.1) * 8.0
+	char_root.position = Vector2(size.x * 0.5 - 380.0, size.y - 800.0 + bob)
+	_tap_scale = lerpf(_tap_scale, 1.0, minf(delta * 8.0, 1.0))
+	char_root.scale = Vector2(CHAR_SCALE * _tap_scale, CHAR_SCALE * (2.0 - _tap_scale))
+	if _mouth_timer > 0.0:
+		_mouth_timer -= delta
+		if _mouth_timer <= 0.0:
+			set_expression("neutral")
 
 
 func _gui_input(event: InputEvent) -> void:
