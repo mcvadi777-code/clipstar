@@ -22,7 +22,6 @@ var pb_task: ProgressBar
 var lbl_task_reward: Label
 var btn_sound: Button
 var btn_boost: Button
-var lbl_boost: Label
 var panel_kind: String = ""
 var _ui_timer: float = 0.0
 var _panel_timer: float = 0.0
@@ -188,27 +187,21 @@ func _build_side_buttons() -> void:
 	add_child(layer)
 
 	var tap_btn: Button = _button("", Color("#7ee0c0"), 24)
-	tap_btn.position = Vector2(24.0, TOP_H + 40.0)
+	tap_btn.position = Vector2(24.0, TOP_H + 178.0)
 	tap_btn.size = Vector2(132.0, 132.0)
 	tap_btn.pressed.connect(_on_tap_button)
 	layer.add_child(tap_btn)
 	_center_icon(tap_btn, "icon_coin.svg", 64.0)
 
 	btn_boost = _button("", Color("#ffb26b"), 24)
-	btn_boost.position = Vector2(24.0, TOP_H + 196.0)
+	btn_boost.position = Vector2(24.0, TOP_H + 322.0)
 	btn_boost.size = Vector2(132.0, 132.0)
 	btn_boost.pressed.connect(_on_boost)
 	layer.add_child(btn_boost)
-	_center_icon(btn_boost, "icon_bolt.svg", 64.0)
-
-	lbl_boost = _label("", 20, Color("#3a2430"))
-	lbl_boost.position = Vector2(24.0, TOP_H + 300.0)
-	lbl_boost.size = Vector2(132.0, 26.0)
-	lbl_boost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	layer.add_child(lbl_boost)
+	btn_boost.text = "×2"
 
 	var shop_btn: Button = _button("", Color("#c9a0ff"), 24)
-	shop_btn.position = Vector2(24.0, TOP_H + 352.0)
+	shop_btn.position = Vector2(24.0, TOP_H + 466.0)
 	shop_btn.size = Vector2(132.0, 132.0)
 	shop_btn.pressed.connect(_open_upgrades)
 	layer.add_child(shop_btn)
@@ -354,10 +347,10 @@ func _tick_ui() -> void:
 	pb_level.value = lv.x
 	if Game.is_boost():
 		var left: int = Game.boost_left()
-		lbl_boost.text = "%d:%02d" % [left / 60, left % 60]
+		btn_boost.text = "%d:%02d" % [left / 60, left % 60]
 		btn_boost.disabled = true
 	else:
-		lbl_boost.text = "буст"
+		btn_boost.text = "×2"
 		btn_boost.disabled = false
 	_refresh_task()
 
